@@ -1,4 +1,4 @@
-# Simple Ethereum Node Monitor
+# Basic Ethereum Node Monitor
 A simple tool to monitor ETH2 nodes based on [Ethereum on Raspberry Pi project](https://github.com/Web3-Pi/Ethereum-On-Raspberry-Pi). Monitor pushes data to the InfluxDB instance that, in turn, may be queried by Grafana to produce a visual representation of the node state. It works in parallel with [basic system monitor](https://github.com/Web3-Pi/basic-system-monitor) and allows monitoring of multiple nodes (both single and dual-device setups).
 
 It was initially developed on **Windows 10 Pro** with **PyCharm 2022.3.1 (Community Edition)** and **Python 3.11**.
