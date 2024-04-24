@@ -23,7 +23,12 @@ class EthSyncingResult:
 
     def sync_percent(self) -> float:
         assert not self.is_synced()
-        return 100.0 * float(self.get_current_block()) / float(self.get_highest_block())
+
+        hb = self.get_highest_block()
+        if hb == 0:
+            return 0.0
+        else:
+            return 100.0 * float(self.get_current_block()) / float(hb)
 
     def __str__(self):
         if self.is_synced():
