@@ -38,6 +38,9 @@ class EthV1NodeSyncingResult:
         head_slot = int(self.sync_status["head_slot"])
         sync_distance = int(self.sync_status["sync_distance"])
 
+        if head_slot == 0:
+            return 0.0
+
         return 100.0 * float(head_slot - sync_distance) / float(head_slot)
 
     def __str__(self):
