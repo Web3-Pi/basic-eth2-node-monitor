@@ -26,13 +26,15 @@ class SystemStatusResult:
 
     disk_used: int = -1
 
+    cpu_temp: float = 0.0
+
     @classmethod
     def from_dict(cls, d: Dict) -> SystemStatusResult:
         return SystemStatusResult(d["host_name"],
                                   d["num_cores"], d["cpu_percent"],
                                   d["mem_total"], d["mem_used"], d["mem_free"], d["mem_percent"],
                                   d["swap_total"], d["swap_used"], d["swap_free"], d["swap_percent"],
-                                  d["disk_used"])
+                                  d["disk_used"], d.get("cpu_temp", 0.0))
 
     def __str__(self):
         hmt = h(self.mem_total)
@@ -46,7 +48,7 @@ class SystemStatusResult:
         hdu = h(self.disk_used)
 
         m = f"SystemStatusResultWrapper: '{self.host_name}' " \
-            f"CPU: cores {self.num_cores}, load: {self.cpu_percent}%, " \
+            f"CPU: cores {self.num_cores}, load: {self.cpu_percent}%, temp: {self.cpu_temp} C," \
             f"MEM: total {hmt}, used {hmu}, free {hmf}, percent {self.mem_percent}%, " \
             f"SWAP: total {hst}, used {hsu}, free {hsf} percent {self.swap_percent}%, " \
             f"DISK: used {hdu}"

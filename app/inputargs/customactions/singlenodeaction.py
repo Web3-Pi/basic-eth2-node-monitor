@@ -14,15 +14,15 @@ class SubparseAndAppendSingleNodeAction(BaseAppendAction):
 
     @classmethod
     def validate(cls, values: List) -> str:
-        msg = validate_num_args(values, cls.MIN_ARGS, cls.MAX_ARGS)
-        msg = cls.validate_supported_consensus_clients(values[1]) if msg == "" else msg
-        msg = validate_endpoint_with_ports(values, 2) if msg == "" else msg
-
-        return msg
+        return (
+            validate_num_args(values, cls.MIN_ARGS, cls.MAX_ARGS) or
+            cls.validate_supported_consensus_clients(values[1]) or
+            validate_endpoint_with_ports(values, 2)
+        )
 
     def parse_me(self, values) -> List:
         msg = self.validate(values)
-        if msg != "":
+        if msg:
             raise argparse.ArgumentError(self, msg)
 
         return update_default_ports(values, self.DEFAULT_PORTS, 2)

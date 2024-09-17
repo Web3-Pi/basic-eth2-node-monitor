@@ -4,6 +4,7 @@ class DefaultEntryFields:
     MEM = "mem"
     SWAP = "swap"
     DISK = "disk"
+    TEMP = "temp"
     STATUS_NODE = "status_node"
     STATUS_EXEC = "status_exec"
     STATUS_CONSENSUS = "status_consensus"
@@ -17,6 +18,7 @@ class DefaultEntryFields:
     USED_BYTES = "used_bytes"
     ACTIVE_PERCENT = "active_percent"
     LAST_BLOCK = "last_block"
+    DEG_C = "deg_C"
 
     SYNC_PART_PERC_0 = "sync_part_perc_0"
     SYNC_PART_PERC_1 = "sync_part_perc_1"
