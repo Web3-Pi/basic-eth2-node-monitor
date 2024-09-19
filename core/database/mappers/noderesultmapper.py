@@ -28,7 +28,7 @@ class NodeResultMapper:
             res = CustomEntriesMapper.system_stats_entries(host_name_tag,
                                                            s.num_cores, s.cpu_percent,
                                                            s.mem_used, s.swap_used, s.disk_used,
-                                                           s.cpu_temp)
+                                                           s.cpu_temp, s.net_upload, s.net_download)
 
         return res
 

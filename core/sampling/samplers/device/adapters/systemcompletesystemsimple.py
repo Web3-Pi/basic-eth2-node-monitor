@@ -15,4 +15,7 @@ class SamplerAdapterSystemCompleteSystemSimple(EndpointSamplerAdapter):
 
         ssr: SystemStatusResult = samples[0]
 
-        return SystemResult(ssr.host_name, ssr.num_cores, ssr.cpu_percent, ssr.mem_used, ssr.swap_used, ssr.disk_used, ssr.cpu_temp)
+        return SystemResult(
+            ssr.host_name, ssr.num_cores, ssr.cpu_percent, ssr.mem_used, ssr.swap_used, ssr.disk_used,
+            cpu_temp=ssr.cpu_temp, net_upload=ssr.net_upload, net_download=ssr.net_download
+        )

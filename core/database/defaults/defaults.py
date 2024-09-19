@@ -5,6 +5,7 @@ class DefaultEntryFields:
     SWAP = "swap"
     DISK = "disk"
     TEMP = "temp"
+    NET = "net"
     STATUS_NODE = "status_node"
     STATUS_EXEC = "status_exec"
     STATUS_CONSENSUS = "status_consensus"
@@ -19,6 +20,8 @@ class DefaultEntryFields:
     ACTIVE_PERCENT = "active_percent"
     LAST_BLOCK = "last_block"
     DEG_C = "deg_C"
+    UPLOAD_RATE = "upload_rate"
+    DOWNLOAD_RATE = "download_rate"
 
     SYNC_PART_PERC_0 = "sync_part_perc_0"
     SYNC_PART_PERC_1 = "sync_part_perc_1"

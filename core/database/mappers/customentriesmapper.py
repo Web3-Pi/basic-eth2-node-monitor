@@ -14,12 +14,15 @@ class CustomEntriesMapper:
     @classmethod
     def system_stats_entries(cls, host_name: str,
                              num_cores: int, cpu_percent: float,
-                             mem_used: int, swap_used: int, disk_used: int, temp: float) -> List[InfluxDBEntry]:
+                             mem_used: int, swap_used: int, disk_used: int, temp: float,
+                             net_upload: float, net_download: float) -> List[InfluxDBEntry]:
         return [InfluxDBEntry.default(cls.DEF.CPU, host_name, cls.DEF.USED_PERCENT, num_cores * cpu_percent),
                 InfluxDBEntry.default(cls.DEF.MEM, host_name, cls.DEF.USED_BYTES, mem_used),
                 InfluxDBEntry.default(cls.DEF.SWAP, host_name, cls.DEF.USED_BYTES, swap_used),
                 InfluxDBEntry.default(cls.DEF.DISK, host_name, cls.DEF.USED_BYTES, disk_used),
                 InfluxDBEntry.default(cls.DEF.TEMP, host_name, cls.DEF.DEG_C, temp),
+                InfluxDBEntry.default(cls.DEF.NET, host_name, cls.DEF.UPLOAD_RATE, net_upload),
+                InfluxDBEntry.default(cls.DEF.NET, host_name, cls.DEF.DOWNLOAD_RATE, net_download),
                 ]
 
     def sync_percent_entries_4(self, p0: float, p1: float, p2: float, p3: float) -> List[InfluxDBEntry]:

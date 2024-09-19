@@ -1,7 +1,7 @@
 import humanize
+from typing import Union
 
-
-def h(val: int, binary=True) -> str:
+def h(val: Union[int, float], binary=True) -> str:
     return humanize.naturalsize(val, binary)
 
 

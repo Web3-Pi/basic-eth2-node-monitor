@@ -15,7 +15,11 @@ class SystemResult:
 
     cpu_temp: float
 
+    net_upload: float
+    net_download: float
+
     def __str__(self):
         return f"{self.__class__.__name__}: host_name {self.host_name}, num_cores {self.num_cores}, " \
                f"cpu_percent {self.cpu_percent}, mem_used {self.mem_used}, swap_used {self.swap_used}, " \
-               f"disk_used {self.disk_used}, cpu_temp {self.cpu_temp}"
+               f"disk_used {self.disk_used}, cpu_temp {self.cpu_temp}, " \
+               f"net_upload {self.net_upload}, net_download {self.net_download}"
