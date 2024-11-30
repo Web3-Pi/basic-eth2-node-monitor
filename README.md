@@ -41,7 +41,7 @@ Installation instruction (Ubuntu)
 ```shell
 cd APPROPRIATE_DIRECTORY
 git clone https://github.com/Web3-Pi/basic-eth2-node-monitor.git
-cd simple-eth2-node-monitor
+cd basic-eth2-node-monitor
 python3 -m venv venv
 source venv/bin/activate
 python3 -m pip install -r requirements.txt
