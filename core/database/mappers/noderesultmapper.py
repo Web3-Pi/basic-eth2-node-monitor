@@ -1,11 +1,12 @@
-from typing import List
-
+from typing import List, Dict, Tuple, Any
 from core.database.mappers.hostmapping import HostTagMapper
 from core.sampling.samplers.device.samplingresults.systemresult import SystemResult
 from core.sampling.samplers.node.results.nodesamplingresult import NodeSamplingResult
 from core.database.mappers.customentriesmapper import CustomEntriesMapper
 from core.database.defaults.mappers import client_sync_status_to_float, node_sync_status_to_float
 from core.database.influxdb.influxdbentry import InfluxDBEntry
+from core.sampling.samplers.node.results.syncstatus import ClientSyncingStatus, NodeSyncingStatus
+
 
 
 class NodeResultMapper:
@@ -13,13 +14,40 @@ class NodeResultMapper:
     def __init__(self) -> None:
         self.last_block_cache = {}
         self.mapper: CustomEntriesMapper | None = None
+        self.inactive_status_cache: Dict[str, Tuple[bool, bool, bool]] = {}
 
     def _status_entries(self, sample: NodeSamplingResult) -> List[InfluxDBEntry]:
-        return self.mapper.sync_status_entries(
-            client_sync_status_to_float(sample.exec_cli_sync_status()),
-            client_sync_status_to_float(sample.consensus_cli_sync_status()),
-            node_sync_status_to_float(sample.node_sync_status())
+        exec_status = None
+        consensus_status = None
+        node_status = None
+
+        exec_inactive = sample.exec_cli_sync_status() == ClientSyncingStatus.INACTIVE
+        consensus_inactive = sample.consensus_cli_sync_status() == ClientSyncingStatus.INACTIVE
+        node_inactive = node_status == sample.node_sync_status() == NodeSyncingStatus.INACTIVE
+
+        node_key = sample.node_name
+        prev_exec_inactive, prev_consensus_inactive, prev_node_inactive = self.inactive_status_cache.get(
+            node_key, (False, False, False)
         )
+
+        if (not exec_inactive) or (exec_inactive and prev_exec_inactive):
+            exec_status = client_sync_status_to_float(sample.exec_cli_sync_status())
+        else:
+            print("Detected an inactive execution client once. Skipping results for this attempt")
+
+        if (not consensus_inactive) or (consensus_inactive and prev_consensus_inactive):
+            consensus_status = client_sync_status_to_float(sample.consensus_cli_sync_status())
+        else:
+            print("Detected an inactive consensus client once. Skipping results for this attempt")
+
+        if (not node_inactive) or (node_inactive and prev_node_inactive):
+            node_status = node_sync_status_to_float(sample.node_sync_status())
+        else:
+            print("Detected an inactive node once. Skipping results for this attempt")
+
+        self.inactive_status_cache[node_key] = (exec_inactive, consensus_inactive, node_inactive)
+
+        return self.mapper.sync_status_entries(exec_status, consensus_status, node_status)
 
     @classmethod
     def _map_system_entry(cls, host_name_tag: str, s: SystemResult | None) -> List[InfluxDBEntry]:

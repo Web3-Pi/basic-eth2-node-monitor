@@ -37,9 +37,20 @@ class CustomEntriesMapper:
     def last_block_entries(self, block_num: int) -> List[InfluxDBEntry]:
         return [self.entry_builder.build(self.DEF.CHAIN, self.DEF.LAST_BLOCK, block_num)]
 
-    def sync_status_entries(self, status_exec: float,
-                            status_consensus: float,
-                            status_node: float) -> List[InfluxDBEntry]:
-        return [self.entry_builder.build(self.DEF.STATUS_EXEC, self.DEF.ACTIVE_PERCENT, status_exec),
-                self.entry_builder.build(self.DEF.STATUS_CONSENSUS, self.DEF.ACTIVE_PERCENT, status_consensus),
-                self.entry_builder.build(self.DEF.STATUS_NODE, self.DEF.ACTIVE_PERCENT, status_node)]
+    def sync_status_entries(self, status_exec: float | None,
+                            status_consensus: float | None,
+                            status_node: float | None) -> List[InfluxDBEntry]:
+        entries = []
+
+        if status_exec is not None:
+            entries.append(self.entry_builder.build(self.DEF.STATUS_EXEC, self.DEF.ACTIVE_PERCENT, status_exec))
+
+        if status_consensus is not None:
+            entries.append(
+                self.entry_builder.build(self.DEF.STATUS_CONSENSUS, self.DEF.ACTIVE_PERCENT, status_consensus))
+
+        if status_node is not None:
+            entries.append(self.entry_builder.build(self.DEF.STATUS_NODE, self.DEF.ACTIVE_PERCENT, status_node))
+
+        return entries
+
