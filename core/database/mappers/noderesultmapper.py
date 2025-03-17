@@ -33,17 +33,17 @@ class NodeResultMapper:
         if (not exec_inactive) or (exec_inactive and prev_exec_inactive):
             exec_status = client_sync_status_to_float(sample.exec_cli_sync_status())
         else:
-            print("Detected an inactive execution client once. Skipping results for this attempt")
+            print("\nDetected an inactive execution client once. Skipping results for this attempt\n")
 
         if (not consensus_inactive) or (consensus_inactive and prev_consensus_inactive):
             consensus_status = client_sync_status_to_float(sample.consensus_cli_sync_status())
         else:
-            print("Detected an inactive consensus client once. Skipping results for this attempt")
+            print("\nDetected an inactive consensus client once. Skipping results for this attempt\n")
 
         if (not node_inactive) or (node_inactive and prev_node_inactive):
             node_status = node_sync_status_to_float(sample.node_sync_status())
         else:
-            print("Detected an inactive node once. Skipping results for this attempt")
+            print("\nDetected an inactive node once. Skipping results for this attempt\n")
 
         self.inactive_status_cache[node_key] = (exec_inactive, consensus_inactive, node_inactive)
 
