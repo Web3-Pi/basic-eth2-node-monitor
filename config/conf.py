@@ -21,8 +21,8 @@ APP_EPILOG = "Additional information regarding components configuration.\n\n"\
              "InfluxDB:\n" \
              "  - InfluxDB is used to store data samples displayed by Grafana\n" \
              "  - Default InfluxDB http port: 8086\n" \
-             "  - To interact with InfluxDB: a username, password, and an existing database name must be provided\n" \
-             "  - Default values - user: geth, pass: geth, database: ethonrpi"
+             "  - To interact with InfluxDB: a username, token, org and bucket must be provided\n" \
+             "  - Default values - user: admin, token: web3-pi-node-monitor, org: web3-pi, bucket: ethonrpi"
 
 # Default configuration
 LIGHTHOUSE_LETTER = 'l'
@@ -36,9 +36,10 @@ DEFAULT_SYSTEM_MONITOR_PORT = 7197
 
 DEFAULT_INFLUX_DB_PORT = 8086
 
-DEFAULT_INFLUX_USER = "geth"
-DEFAULT_INFLUX_PASS = "geth"
-DEFAULT_INFLUX_DATABASE = "ethonrpi"
+DEFAULT_INFLUX_USER = "admin"
+DEFAULT_INFLUX_ADMIN_TOKEN = "web3-pi-node-monitor"
+DEFAULT_INFLUX_BUCKET = "ethonrpi"
+DEFAULT_INFLUX_ORG = "web3-pi"
 
 DEFAULT_DELAY_BOTH_ACTIVE = 7.0
 DEFAULT_DELAY_DEGRADED = 10.0

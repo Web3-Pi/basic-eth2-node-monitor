@@ -1,0 +1,14 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB_v2
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    jsonData:
+      version: Flux
+      organization: web3-pi
+      defaultBucket: ethonrpi
+      tlsSkipVerify: true
+    secureJsonData:
+      token: web3-pi-node-monitor

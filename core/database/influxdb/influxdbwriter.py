@@ -14,8 +14,6 @@ from core.database.influxdb.influxdbentry import InfluxDBEntry
 
 class InfluxDBWriter:
 
-    RETENTION_POLICY = "autogen"
-
     def __init__(self, db_url: str, client: InfluxDBClient, bucket: str) -> None:
         self.db_url = db_url
 
@@ -54,19 +52,18 @@ class InfluxDBWriter:
         self.client.close()
 
     @classmethod
-    def create(cls, db_endpoint: str, username: str, passwd: str, database: str) -> InfluxDBWriter | None:
-        client = InfluxDBClient(url=db_endpoint, token=f'{username}:{passwd}', org='-')
-        bucket = f'{database}/{cls.RETENTION_POLICY}'
+    def create(cls, db_endpoint: str, username: str, token: str, org: str, bucket: str) -> InfluxDBWriter | None:
+        client = InfluxDBClient(url=db_endpoint, token=token, org=org)
 
         if not client.ping():
             print(f"InfluxDB: could not connect to remote host: {db_endpoint} "
-                  f"with provided credentials, user: {username}, pass: {passwd}")
+                  f"with provided credentials, user: {username}, token: {token}")
             return None
 
         try:
             client.query_api().query(f'from(bucket:"{bucket}") |> range(start: -1ms)')
         except ApiException as ex:
-            print(f"InfluxDB: Database '{database}' not present or accessible.\n"
+            print(f"InfluxDB: Bucket '{bucket}' not present or accessible.\n"
                   f"InfluxDB: Error message from the database server: '{json.loads(ex.body.decode('utf-8'))['error']}'")
 
             client.close()

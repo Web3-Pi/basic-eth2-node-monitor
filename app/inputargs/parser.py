@@ -2,7 +2,7 @@ import argparse
 
 from app.inputargs.customactions.dualnodeaction import SubparseAndAppendDualNodeAction
 from app.inputargs.customactions.singlenodeaction import SubparseAndAppendSingleNodeAction
-from config.conf import DEFAULT_INFLUX_DB_PORT, DEFAULT_INFLUX_USER, DEFAULT_INFLUX_PASS, DEFAULT_INFLUX_DATABASE, \
+from config.conf import DEFAULT_INFLUX_DB_PORT, DEFAULT_INFLUX_USER, DEFAULT_INFLUX_ADMIN_TOKEN, DEFAULT_INFLUX_ORG, DEFAULT_INFLUX_BUCKET, \
     DEFAULT_DELAY_BOTH_ACTIVE, DEFAULT_DELAY_DEGRADED, APP_EPILOG, APP_DESCRIPTION, GENERIC_CONSENSUS_CLIENT_LETTER, \
     LIGHTHOUSE_LETTER
 
@@ -56,9 +56,9 @@ def parse_app_args(args=None):
         "-dbc",
         "--database_credentials",
         nargs=3,
-        metavar=("USER", "PASS", "DATABASE"),
-        default=[DEFAULT_INFLUX_USER, DEFAULT_INFLUX_PASS, DEFAULT_INFLUX_DATABASE],
-        help="InfluxDB login credentials and a database name to use",
+        metavar=("USER", "TOKEN", "ORG", "BUCKET"),
+        default=[DEFAULT_INFLUX_USER, DEFAULT_INFLUX_ADMIN_TOKEN, DEFAULT_INFLUX_ORG, DEFAULT_INFLUX_BUCKET],
+        help="InfluxDB login credentials and a bucket name to use",
         type=str
     )
 
