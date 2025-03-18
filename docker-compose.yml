@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=web3-pi-node-monitor
+      - DOCKER_INFLUXDB_INIT_ORG=web3-pi
+      - DOCKER_INFLUXDB_INIT_BUCKET=ethonrpi
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=web3-pi-node-monitor
+      - INFLUXDB_HTTP_AUTH_ENABLED=true
+      - DOCKER_INFLUXDB_INIT_RETENTION=1w
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-influxdb-flux-datasource
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+
+    depends_on:
+      - influxdb
+
+volumes:
+  influxdb_data:
+  grafana_data:

@@ -53,9 +53,10 @@ After these steps, the node monitor is installed and configured.
 Two supported setups require many command line arguments for each specified node. Hence, most arguments can be skipped, and the application will use default values in such cases. Below is a complete list of default values:
 - Database - InfluxDB:
   - listen port: 8086
-  - user: geth
-  - password: geth
-  - database: ethonrpi
+  - user: admin
+  - token: web3-pi-node-monitor
+  - org: web3-pi
+  - bucket: ethonrpi
 - Clients:
   - Geth Websocket listen port: 8546
   - Lighthouse HTTP listen port: 5052
@@ -67,6 +68,16 @@ Two supported setups require many command line arguments for each specified node
   - degraded node sampling delay: 10 seconds
 
 At least one Ethereum node and a database host must be specified to run the application.
+
+#### Docker
+
+For development purposes, it is possible to use Docker to set up a pre-configured environment with InfluxDB and
+Grafana. The `docker-compose.yml` file contains the configuration of the services.
+Run the following command to start the development environment:
+
+```shell
+docker compose up
+```
 
 #### Node specification
 To add a single-device node, the `-sn` option must be used, followed by consensus client specifier (l|d), node_name/node_address, and optionally by geth WS port, consensus HTTP port, and system monitor HTTP port:
@@ -225,4 +236,4 @@ When the remote system monitor is not responding, it is treated as if the whole 
 In order to use the data from this monitor in Grafana, InfluxDB has to be configured as a data source. Host names are used as tags in the database to retrieve required measurements (CPU load, DISK use, MEM and SWAP use, SYNC progress, including block number). Based on the names used in this document, Grafana is available via URL:
 - `http://statsserver.local:3000`
 
-An example Grafana dashboard prepared to work with this monitoring tool is available for [download or inspection](grafana/dashboard_v01.json).
+An example Grafana dashboard prepared to work with this monitoring tool is available for [download or inspection](grafana/dashboards/dashboard_v02.json).

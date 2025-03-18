@@ -37,8 +37,9 @@ class IntroService:
     def print_intro(cls, app_descr: ApplicationDescriptor) -> None:
         print("Starting monitoring duties")
 
-        print(f"  Database endpoint: {as_http_addr(app_descr.database.host, app_descr.database.port)}, using database: "
-              f"{app_descr.database.database}")
+        print(f"  Database endpoint: {as_http_addr(app_descr.database.host, app_descr.database.port)}, "
+              f"org: {app_descr.database.org}, "
+              f"bucket: {app_descr.database.bucket}")
 
         print(f"  Sampling delays")
         print(f"    Active node sampling delay:   {app_descr.wait_delay.delay_active} seconds")

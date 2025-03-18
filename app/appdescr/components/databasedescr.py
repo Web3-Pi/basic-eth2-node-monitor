@@ -7,5 +7,6 @@ class DatabaseDescr:
     port: int
 
     user: str
-    password: str
-    database: str
+    token: str
+    org: str
+    bucket: str

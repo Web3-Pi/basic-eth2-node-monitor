@@ -29,7 +29,7 @@ class DatabaseService:
 
     @classmethod
     def create(cls, descr: DatabaseDescr) -> DatabaseService | None:
-        db = InfluxDBWriter.create(as_http_addr(descr.host, descr.port), descr.user, descr.password, descr.database)
+        db = InfluxDBWriter.create(as_http_addr(descr.host, descr.port), descr.user, descr.token, descr.org, descr.bucket)
 
         if db is not None:
             return DatabaseService(db)
